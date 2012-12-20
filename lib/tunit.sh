@@ -36,6 +36,11 @@ function tunit_header()
 EOF
 	return 1
     fi
+    TUNIT_FAILURES=0
+    TUNIT_ERRORS=0
+    TUNIT_TESTS=0
+    TUNIT_TIMERSTART=$(date "+%s")
+    return 0
 }
 
 function tunit_footer()
