@@ -7,6 +7,11 @@
 #
 # If COLOR=on, then the OK/FAIL bits are in RED or GREEN.
 
+TUNIT_FAILURES=0
+TUNIT_ERRORS=0
+TUNIT_TESTS=0
+TUNIT_TIMERSTART=$(date "+%s")
+
 COLOR=${COLOR:-on}
 
 if [ "$COLOR" == "on" ]; then
@@ -24,36 +29,13 @@ function tunit_header()
 {
     if [ "$1" == "--help" ]; then
 	cat <<EOF
-    tunit_header(tests, errors, failures, elapsed)
+    tunit_header()
 
     Generate a tunit header, to display one or more tunit_testcase()s.
-    tests : total number of tests.
-    errors : total number of errors
-    failures : total number of failed test cases
-    elapsed : The total number of seconds elapsed during testing
+    Tunit doesn't have a header, so this function doesn't currently do anything.
 EOF
 	return 1
     fi
-
-    local tests errors failures elapsed encoding
-    local errcolor failcolor
-
-    tests=${1:-0}
-    errors=${2:-0}
-    failures=${3:-0}
-    elapsed=${4:-0}
-
-    errcolor="${COLOR_GREEN}"
-    failcolor="${COLOR_GREEN}"
-
-    if [ $errors -gt 0 ]; then
-	errcolor="${COLOR_RED}"
-    fi
-    if [ $failures -gt 0 ]; then
-	failcolor="${COLOR_RED}"
-    fi
-    echo
-    echo "==== $tests TESTS in $elapsed SECONDS : ${errcolor}$errors ERRORS${COLOR_NORMAL}, ${errcolor}$failures FAILURES${COLOR_NORMAL} ===="
 }
 
 function tunit_footer()
@@ -66,6 +48,20 @@ function tunit_footer()
 EOF
 	return 1
     fi
+    local errcolor failcolor elapsed
+    elapsed=$(expr $(date "+%s") - $TUNIT_TIMERSTART)
+    errcolor="${COLOR_GREEN}"
+    failcolor="${COLOR_GREEN}"
+
+    if [ $TUNIT_ERRORS -gt 0 ]; then
+	errcolor="${COLOR_RED}"
+    fi
+    if [ $TUNIT_FAILURES -gt 0 ]; then
+	failcolor="${COLOR_RED}"
+    fi
+    echo
+    echo "==== $TUNIT_TESTS TESTS in $elapsed SECONDS : ${errcolor}$TUNIT_ERRORS ERRORS${COLOR_NORMAL}, ${errcolor}$TUNIT_FAILURES FAILURES${COLOR_NORMAL} ===="
+
     return 0
 }
 
@@ -95,8 +91,11 @@ EOF
     failmsg="$5"
     cdata="$6"
 
+    TUNIT_TESTS=$(expr $TUNIT_TESTS + 1)
     printf "[$classname] $testname .... "
     if [ "$failtype" != "" ]; then
+	TUNIT_ERRORS=$(expr $TUNIT_ERRORS + 1)
+	TUNIT_FAILURES=$(expr $TUNIT_FAILURES + 1)
 	echo "${COLOR_RED}[FAILED]"
 	echo "        $failtype : $failmsg"
 	echo "$cdata" | sed s/"^"/"        "/g

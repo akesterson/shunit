@@ -10,13 +10,12 @@ Example output
 
     akesterson@akesterson-pc ~/source/upstream/git/shunit
     $ bash tests/tunit.sh
-
-    ==== 0 TESTS in 0 SECONDS : 0 ERRORS, 0 FAILURES ====
     [super::class] someTest .... [OK]
     [super::class] someOtherTest .... [FAILED]
 	    generic failure : Yo dawg, I heard you like failures
 	    This is some raw data, please read it
 
+    ==== 2 TESTS in 0 SECONDS : 1 ERRORS, 1 FAILURES ====
 
     akesterson@akesterson-pc ~/source/upstream/git/shunit
     $ bash tests/junit.sh
