@@ -1,6 +1,8 @@
 The shunit script
 ======
 
+shunit requires cmdarg. Install it first: https://github.com/akesterson/cmdarg
+
 shunit is a bash script for running tests scripts that are written with the shunit library. To use it, fir install it:
 
     make install
