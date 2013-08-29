@@ -1,4 +1,21 @@
-shunit
+The shunit script
+======
+
+shunit is a bash script for running tests scripts that are written with the shunit library. To use it, fir install it:
+
+    make install
+
+... then run it with the name of a single bash test script or a whole directory of scripts:
+
+    shunit -t test_script.sh
+    shunit -t test_directory/
+
+... The default output format is junit. You can select tunit with the '-f' flag:
+
+    shunit -t test_script.sh -f tunit
+
+
+The shunit library
 ======
 
 shunit is just a set of bash functions for producing unit test output from bash scripts. I wrote this library because I often found myself writing things in bash whose output I wanted to consume as discrete pass/fail tasks into Bamboo, so I wrote the junit functions. Then later on, I got sick and tired of (as a human) reading junit output, so I wrote the tunit functions, so my scripts could output tunit or junit depending on which flags I passed.
