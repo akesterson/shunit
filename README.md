@@ -14,15 +14,24 @@ shunit is a bash script for running tests scripts that are written with the shun
 
     shunit -t test_script.sh -f tunit
 
+Writing tests for the shunit script
+======
 
-The shunit library
+* In your project, create a tests/ directory. This directory will contain a number of *.sh files. You can have any number of test functions in them, named "shunittest_***".
+* Only functions in the *sh files named "shunittest_" will be executed.
+* Doing anything other than "source" at the top level of your *sh test file is considered Very Bad Form (tm)
+* We don't care what your shunittest_ functions do, except that they MUST:
+ * Exit 0 to indicate that the test has succeeded, - OR -
+ * Print something informative to stderr, and Exit 1 to indicate that the test failed
+
+For developers: The shunit library
 ======
 
 shunit is just a set of bash functions for producing unit test output from bash scripts. I wrote this library because I often found myself writing things in bash whose output I wanted to consume as discrete pass/fail tasks into Bamboo, so I wrote the junit functions. Then later on, I got sick and tired of (as a human) reading junit output, so I wrote the tunit functions, so my scripts could output tunit or junit depending on which flags I passed.
 
 Complete documentation is inside the functions (each function has --help) in ./lib/*unit.sh. A pair of complete examples are in tests/*unit.sh.
 
-Example output
+For developers: example output
 ==============
 
     akesterson@akesterson-pc ~/source/upstream/git/shunit

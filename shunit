@@ -28,7 +28,7 @@ for file in $FILES;
 do
     declare -A tests
     source $file
-    for key in $(declare -F | grep 'test_')
+    for key in $(declare -F | grep 'shunittest_')
     do
 	if [[ "$(type -t $key)" == "function" ]]; then
 	    start=$(date "+%s")
