@@ -63,15 +63,18 @@ $(DISTFILE): version.sh
 	mock -r epel-$(RHEL_VERSION)-noarch ./dist/$(SRPM) --resultdir ./dist/ --define "version $(VERSION)" --define "release $(RELEASE)"
 
 uninstall:
-	rm -f $(PREFIX)/usr/lib/shunit.sh
+	rm -f $(PREFIX)/usr/lib/junit.sh
 	rm -f $(PREFIX)/usr/lib/tunit.sh
+	rm -f $(PREFIX)/usr/bin/shunit.sh
 
 install:
 	mkdir -p $(PREFIX)/usr/bin
 	mkdir -p $(PREFIX)/usr/lib
-	install ./lib/shunit.sh $(PREFIX)/usr/lib/shunit.sh
+	install ./bin/shunit.sh $(PREFIX)/usr/bin/shunit.sh
+	install ./lib/junit.sh $(PREFIX)/usr/lib/junit.sh
 	install ./lib/tunit.sh $(PREFIX)/usr/lib/tunit.sh
 
 MANIFEST:
-	echo /usr/lib/shunit.sh >> MANIFEST
+	echo /usr/bin/shunit.sh > MANIFEST
+	echo /usr/lib/junit.sh >> MANIFEST
 	echo /usr/lib/tunit.sh >> MANIFEST
