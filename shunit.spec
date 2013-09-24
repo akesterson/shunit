@@ -14,7 +14,7 @@ Source: %{name}-%{version}-%{release}.tar.gz
 
 Requires: vocalocity-automation-stack
 Requires: bash
-Requires: Requires: cmdarg
+Requires: cmdarg
 
 %description
 
