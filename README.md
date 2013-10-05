@@ -67,3 +67,5 @@ shunit vs shunit2
 This library should not be confused with shunit2 (http://shunit2.googlecode.com/svn/trunk/source/2.1/doc/shunit2.html). They are completely unrelated! I didn't even know shunit2 existed until long after I made this.
 
 shunit2 seems neat, but I prefer shunit's style. shunit2 looks like it's trying to be a java-ish unit testing library, and doesn't operate very much like bash. shunit is much simpler; you don't need to know any assert commands, special constants, or how to report failure. You do your tests however you want, report error on stderr, return non-zero to indicate failure. It doesn't get much simpler than that!
+
+The only really useful thing I can see in shunit2 vs shunit, I will admit, is the ability to skip tests. shunit does not currently know how to skip tests, and that is because I didn't fully understand junit when I wrote it, so it does not report on skipped tests even if it did skip them! I will add some mechanism for this at some point.
