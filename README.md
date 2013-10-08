@@ -6,6 +6,12 @@ shunit requires cmdarg. Install it first: https://github.com/akesterson/cmdarg
 shunit is a bash script for running tests scripts that are written with the shunit library. To use it, fir install it:
 
     make install
+    
+... If you want to install it somewhere other than / (not recommended), you can use:
+
+    make PREFIX=/some/other/path install
+    
+... and it will install to /some/other/path/usr/...
 
 ... then run it with the name of a single bash test script or a whole directory of scripts:
 
