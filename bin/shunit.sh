@@ -42,6 +42,7 @@ do
 		${FORMATTER}_testcase "$file" "$key" "$delta" "Exit ${ERRFLAG}" "$SHORTERR" "${ERR}"
 	    fi
 	fi
+	unset -f $key
     done
     unset tests
 done
