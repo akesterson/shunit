@@ -7,6 +7,9 @@ ifndef RHEL_VERSION
 	RHEL_VERSION=5
 endif
 RPM=shunit-$(VERSION)-$(RELEASE).noarch.rpm
+feq ($(RHEL_VERSION),5)
+        MOCKFLAGS=--define "_source_filedigest_algorithm md5" --define "_binary_filedigest_algorithm md5"
+endif
 
 ifndef PREFIX
 	PREFIX=''
@@ -34,19 +37,8 @@ gitclean:
 
 # --- End phony targets
 
-# This was borrowed from distiller, and I think it's to prevent version.sh
-# from updating unnecessarily
 version.sh:
-	if [ ! -d .git ] && [ -f version.sh ]; then echo "No git, keeping old version.sh" ; fi ; \
-	if [ ! -d .git ] && [ ! -f version.sh ]; then echo "No git and no version.sh, you're boned"; exit 1; fi ; \
-	if [ -d .git ] ; then \
-		bash ./gitversion.sh > tmpversion.sh && \
-		VERSIONSHA=$$(openssl sha1 version.sh | cut -d = -f 2) ; \
-		TMPVERSIONSHA=$$(openssl sha1 tmpversion.sh | cut -d = -f 2) ; \
-		if [ ! -e version.sh ] || [ "$$VERSIONSHA" != "$$TMPVERSIONSHA" ]; then \
-			mv tmpversion.sh version.sh; \
-		fi; \
-	fi
+	gitversion.sh > version.sh
 
 $(DISTFILE): version.sh
 	mkdir -p dist/
@@ -56,7 +48,7 @@ $(DISTFILE): version.sh
 
 ./dist/$(SRPM): $(DISTFILE)
 	rm -fr ./dist/$(SRPM)
-	mock --buildsrpm --spec $(SPECFILE) --sources ./dist/ --resultdir ./dist/ --define "version $(VERSION)" --define "release $(RELEASE)"
+	mock --buildsrpm $(MOCKFLAGS) --spec $(SPECFILE) --sources ./dist/ --resultdir ./dist/ --define "version $(VERSION)" --define "release $(RELEASE)"
 
 ./dist/$(RPM): ./dist/$(SRPM)
 	rm -fr ./dist/$(RPM)
