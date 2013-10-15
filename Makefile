@@ -7,7 +7,7 @@ ifndef RHEL_VERSION
 	RHEL_VERSION=5
 endif
 RPM=shunit-$(VERSION)-$(RELEASE).noarch.rpm
-feq ($(RHEL_VERSION),5)
+ifeq ($(RHEL_VERSION),5)
         MOCKFLAGS=--define "_source_filedigest_algorithm md5" --define "_binary_filedigest_algorithm md5"
 endif
 
