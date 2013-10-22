@@ -1,0 +1,12 @@
+import colorama
+
+class Reporter:
+    def __init__():
+        colorama.init()
+        self.tests = []
+
+    def header():
+        pass
+
+    def footer():
+        
