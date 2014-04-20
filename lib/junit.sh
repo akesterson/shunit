@@ -1,9 +1,9 @@
 #!/bin/bash
 
-JUNIT_FAILURES=0
-JUNIT_ERRORS=0
-JUNIT_TESTS=0
-JUNIT_TIMERSTART=$(date "+%s")
+SHUNIT_FAILURES=0
+SHUNIT_ERRORS=0
+SHUNIT_TESTS=0
+SHUNIT_TIMERSTART=$(date "+%s")
 
 function junit_header()
 {
@@ -18,10 +18,10 @@ function junit_header()
 EOF
 	return 1
     fi
-    JUNIT_FAILURES=0
-    JUNIT_ERRORS=0
-    JUNIT_TESTS=0
-    JUNIT_TIMERSTART=$(date "+%s")
+    SHUNIT_FAILURES=0
+    SHUNIT_ERRORS=0
+    SHUNIT_TESTS=0
+    SHUNIT_TIMERSTART=$(date "+%s")
     > /tmp/$$.junit
 }
 
@@ -68,11 +68,12 @@ function junit_footer()
 EOF
 	return 1
     fi
-    ELAPSED=$(expr $(date "+%s") - $JUNIT_TIMERSTART)
-    junit_header_real $JUNIT_TESTS $JUNIT_ERRORS $JUNIT_FAILURES $ELAPSED "UTF-8"
+    ELAPSED=$(expr $(date "+%s") - $SHUNIT_TIMERSTART)
+    junit_header_real $SHUNIT_TESTS $SHUNIT_ERRORS $SHUNIT_FAILURES $ELAPSED "UTF-8"
     cat /tmp/$$.junit
     rm -f /tmp/$$.junit
     echo '</testsuite>'
+    return 0
 }
 
 function junit_testcase()
@@ -101,11 +102,11 @@ EOF
     failtype="$4"
     failmsg="$5"
     cdata="$6"
-    JUNIT_TESTS=$(expr $JUNIT_TESTS + 1)
+    SHUNIT_TESTS=$(expr $SHUNIT_TESTS + 1)
     echo '    <testcase classname="'$classname'" time="'$elapsed'" name="'$testname'">' >> /tmp/$$.junit
     if [ "$failtype" != "" ]; then
-	JUNIT_ERRORS=$(expr $JUNIT_ERRORS + 1)
-	JUNIT_FAILURES=$(expr $JUNIT_FAILURES + 1)
+	SHUNIT_ERRORS=$(expr $SHUNIT_ERRORS + 1)
+	SHUNIT_FAILURES=$(expr $SHUNIT_FAILURES + 1)
         echo '        <failure type="'$failtype'" message="'$failmsg'">' >> /tmp/$$.junit
         echo '            <![CDATA[' >> /tmp/$$.junit
 	echo "${cdata}" >> /tmp/$$.junit

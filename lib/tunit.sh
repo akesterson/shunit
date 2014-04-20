@@ -7,10 +7,10 @@
 #
 # If COLOR=on, then the OK/FAIL bits are in RED or GREEN.
 
-TUNIT_FAILURES=0
-TUNIT_ERRORS=0
-TUNIT_TESTS=0
-TUNIT_TIMERSTART=$(date "+%s")
+SHUNIT_FAILURES=0
+SHUNIT_ERRORS=0
+SHUNIT_TESTS=0
+SHUNIT_TIMERSTART=$(date "+%s")
 
 COLOR=${COLOR:-on}
 
@@ -36,10 +36,10 @@ function tunit_header()
 EOF
 	return 1
     fi
-    TUNIT_FAILURES=0
-    TUNIT_ERRORS=0
-    TUNIT_TESTS=0
-    TUNIT_TIMERSTART=$(date "+%s")
+    SHUNIT_FAILURES=0
+    SHUNIT_ERRORS=0
+    SHUNIT_TESTS=0
+    SHUNIT_TIMERSTART=$(date "+%s")
     return 0
 }
 
@@ -54,18 +54,18 @@ EOF
 	return 1
     fi
     local errcolor failcolor elapsed
-    elapsed=$(expr $(date "+%s") - $TUNIT_TIMERSTART)
+    elapsed=$(expr $(date "+%s") - $SHUNIT_TIMERSTART)
     errcolor="${COLOR_GREEN}"
     failcolor="${COLOR_GREEN}"
 
-    if [ $TUNIT_ERRORS -gt 0 ]; then
+    if [ $SHUNIT_ERRORS -gt 0 ]; then
 	errcolor="${COLOR_RED}"
     fi
-    if [ $TUNIT_FAILURES -gt 0 ]; then
+    if [ $SHUNIT_FAILURES -gt 0 ]; then
 	failcolor="${COLOR_RED}"
     fi
     echo
-    echo "==== $TUNIT_TESTS TESTS in $elapsed SECONDS : ${errcolor}$TUNIT_ERRORS ERRORS${COLOR_NORMAL}, ${errcolor}$TUNIT_FAILURES FAILURES${COLOR_NORMAL} ===="
+    echo "==== $SHUNIT_TESTS TESTS in $elapsed SECONDS : ${errcolor}$SHUNIT_ERRORS ERRORS${COLOR_NORMAL}, ${errcolor}$SHUNIT_FAILURES FAILURES${COLOR_NORMAL} ===="
 
     return 0
 }
@@ -96,11 +96,11 @@ EOF
     failmsg="$5"
     cdata="$6"
 
-    TUNIT_TESTS=$(expr $TUNIT_TESTS + 1)
+    SHUNIT_TESTS=$(expr $SHUNIT_TESTS + 1)
     printf "[$classname] $testname .... "
     if [ "$failtype" != "" ]; then
-	TUNIT_ERRORS=$(expr $TUNIT_ERRORS + 1)
-	TUNIT_FAILURES=$(expr $TUNIT_FAILURES + 1)
+	SHUNIT_ERRORS=$(expr $SHUNIT_ERRORS + 1)
+	SHUNIT_FAILURES=$(expr $SHUNIT_FAILURES + 1)
 	echo "${COLOR_RED}[FAILED]"
 	echo "        $failtype : $failmsg"
 	echo "$cdata" | sed s/"^"/"        "/g
