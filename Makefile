@@ -55,7 +55,7 @@ $(RHEL_DISTFILE): $(DISTFILE)
 
 ./dist/$(SRPM): $(RHEL_DISTFILE)
 	rm -fr ./dist/$(SRPM)
-	mock --verbose -r epel-${RHEL_VERSION)-noarch --buildsrpm $(MOCKFLAGS) --spec $(SPECFILE) --sources ./dist/ --resultdir ./dist/ --define "version $(VERSION)" --define "release $(RHEL_RELEASE)"
+	mock --verbose -r epel-$(RHEL_VERSION)-noarch --buildsrpm $(MOCKFLAGS) --spec $(SPECFILE) --sources ./dist/ --resultdir ./dist/ --define "version $(VERSION)" --define "release $(RHEL_RELEASE)"
 
 ./dist/$(RPM): ./dist/$(SRPM)
 	rm -fr ./dist/$(RPM)
