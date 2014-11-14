@@ -2,10 +2,16 @@
 
 source /usr/lib/cmdarg.sh
 
+function validate_format
+{
+	echo $1 | grep -E "^junit$|^tunit$" >/dev/null 2>&1
+	return $?
+}
+
 cmdarg_info author "Andrew Kesterson <andrew@aklabs.net>"
 cmdarg_info header "A bash script for unit testing other bash scripts in JUNIT or human-friendly formats"
 cmdarg_info copyright "(MIT License)"
-cmdarg 'f:' 'format' 'Format to print results in. Valid options are: [junit, tunit]' 'junit' 'echo ${OPTARG} | grep -E "^junit$|^tunit$" >/dev/null 2>&1'
+cmdarg 'f:' 'format' 'Format to print results in. Valid options are: [junit, tunit]' 'junit' validate_format
 cmdarg 't:' 'tests' 'Directory or single file to test.'
 
 cmdarg_parse "$@"
