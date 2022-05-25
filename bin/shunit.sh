@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source /usr/lib/cmdarg.sh
+libdir=$(readlink -f $(dirname ${BASH_SOURCE[0]}))/../lib                                                                                                                 
+source ${libdir}/cmdarg.sh
 
 function validate_format
 {
@@ -19,7 +20,7 @@ cmdarg_parse "$@"
 FORMATTER=${cmdarg_cfg['format']}
 
 set -e
-source /usr/lib/${FORMATTER}.sh
+source ${libdir}/${FORMATTER}.sh
 set +e
 
 ${FORMATTER}_header
