@@ -35,7 +35,12 @@ for file in $FILES;
 do
     declare -A tests
     source $file
-    for key in $(declare -F | grep 'shunittest_')
+    if [[ "${cmdarg_argv[@]}" == "" ]]; then
+	keys=$(declare -F | grep shunittest_ | sort)
+    else
+	keys=$(echo ${cmdarg_argv[*]} | tr ' ' '\n' | sort)
+    fi
+    for key in ${keys}
     do
 	if [[ "$(type -t $key)" == "function" ]]; then
 	    start=$(date "+%s")
