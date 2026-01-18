@@ -7,9 +7,9 @@ shunit is a bash script for running tests scripts that are written with the shun
 
     make install
     
-... If you want to install it somewhere other than / (not recommended), you can use:
+... If you want to install it somewhere other than /usr (not recommended), you can use:
 
-    make PREFIX=/some/other/path install
+    PREFIX=/some/other/path make install
     
 ... and it will install to /some/other/path/usr/...
 
