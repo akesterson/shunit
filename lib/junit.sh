@@ -106,8 +106,8 @@ EOF
     cdata="$6"
     SHUNIT_TESTS=$(expr $SHUNIT_TESTS + 1)
     echo '    <testcase classname="'$classname'" time="'$elapsed'" name="'$testname'">' >> /tmp/$$.junit
-    echo '        <system-out/>' >> /tmp/$$.junit
-    echo '        <system-err/>' >> /tmp/$$.junit
+    echo '        <system-out></system-out>' >> /tmp/$$.junit
+    echo '        <system-err></system-err>' >> /tmp/$$.junit
     if [ "$failtype" != "" ]; then
 	SHUNIT_ERRORS=$(expr $SHUNIT_ERRORS + 1)
 	SHUNIT_FAILURES=$(expr $SHUNIT_FAILURES + 1)
