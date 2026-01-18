@@ -54,7 +54,8 @@ EOF
     fi
 
     echo '<?xml version="1.0" encoding="'$encoding'"?>'
-    echo '<testsuite failures="'$failures'" time="'$elapsed'" timestamp="'$(date)'" errors="'$failures'" tests="'$tests'">'
+    echo '<testsuites>'
+    echo '<testsuite failures="'$failures'" time="'$elapsed'" timestamp="'$(date +"%Y-%m-%dT%H:%M:%S%:z")'" errors="'$failures'" tests="'$tests'">'
     echo '    <properties/>'
 }
 
@@ -73,6 +74,7 @@ EOF
     cat /tmp/$$.junit
     rm -f /tmp/$$.junit
     echo '</testsuite>'
+    echo '</testsuites>'
     return 0
 }
 
@@ -107,6 +109,8 @@ EOF
     if [ "$failtype" != "" ]; then
 	SHUNIT_ERRORS=$(expr $SHUNIT_ERRORS + 1)
 	SHUNIT_FAILURES=$(expr $SHUNIT_FAILURES + 1)
+	echo '        <system-out/>' >> /tmp/$$.junit
+	echo '        <system-err/>' >> /tmp/$$.junit
         echo '        <failure type="'$failtype'" message="'$failmsg'">' >> /tmp/$$.junit
         echo '            <![CDATA[' >> /tmp/$$.junit
 	echo "${cdata}" >> /tmp/$$.junit

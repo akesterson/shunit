@@ -1,7 +1,8 @@
 #!/bin/bash
 
-libdir=$(readlink -f $(dirname ${BASH_SOURCE[0]}))/../lib                                                                                                                 
-source ${libdir}/cmdarg.sh
+libdir=$(readlink -f $(dirname ${BASH_SOURCE[0]}))/../lib
+cmdarg_libdir=${AK_PREFIX/lib:-${libdir}}
+source ${cmdarg_libdir}/cmdarg.sh
 
 function validate_format
 {
