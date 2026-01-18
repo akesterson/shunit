@@ -55,7 +55,7 @@ EOF
 
     echo '<?xml version="1.0" encoding="'$encoding'"?>'
     echo '<testsuites>'
-    echo '<testsuite failures="'$failures'" time="'$elapsed'" timestamp="'$(date +"%Y-%m-%dT%H:%M:%S%:z")'" errors="'$failures'" tests="'$tests'">'
+    echo '<testsuite name="main" failures="'$failures'" time="'$elapsed'" timestamp="'$(date +"%Y-%m-%dT%H:%M:%S%:z")'" errors="'$failures'" tests="'$tests'">'
     echo '    <properties/>'
 }
 
